@@ -8,30 +8,47 @@
 import UIKit
 import CoreData
 
-@main
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+ var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+        window.rootViewController = self.setupTabbar()
+        window.makeKeyAndVisible()
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    
+    
+    func setupTabbar() -> UITabBarController{
+        let tabbarController = UITabBarController()
+        tabbarController.tabBar.isTranslucent = false
+        let searchVC = self.setupSearchViewController()
+        let favVC = self.setupFavouriteViewController()
+        tabbarController.tabBar.backgroundColor = .yellow
+        tabbarController.viewControllers = [searchVC , favVC]
+        return tabbarController
     }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    
+    func setupSearchViewController() -> UINavigationController {
+        let searchVC =  SearchViewController()
+        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        searchVC.title = "Search"
+        return UINavigationController(rootViewController: searchVC)
     }
-
+    
+    func setupFavouriteViewController() -> UINavigationController {
+        let favVC =  FavouriteViewController()
+        favVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        favVC.title = "Favourites"
+        return  UINavigationController(rootViewController: favVC)
+    }
+    
+    
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
