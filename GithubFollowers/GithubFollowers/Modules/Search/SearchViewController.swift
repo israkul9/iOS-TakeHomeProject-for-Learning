@@ -9,6 +9,7 @@ import UIKit
 import Combine
 class SearchViewController: UIViewController {
     
+    
     // MARK: ViewModel
     
     var searchViewModel : SearchViewModel = SearchViewModel()
@@ -39,7 +40,9 @@ class SearchViewController: UIViewController {
         self.setupUI()
         self.bindText()
         self.createDismissKeyboardOnTabGesture()
+        
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

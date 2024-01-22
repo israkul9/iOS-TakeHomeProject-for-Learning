@@ -6,8 +6,16 @@
 //
 
 import UIKit
+import Combine
+import Alamofire
+import SDWebImage
 
 class FollowersListViewController: UIViewController {
+    var url = ""
+    var baseURl = "https://api.github.com/users/SAllen0400/followers?per_page=100&page="
+    var followersListViewModel : FollowersViewModel = FollowersViewModel()
+    
+    var subscription = Set<AnyCancellable>()
     private lazy var followersCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -16,7 +24,7 @@ class FollowersListViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 130, right: 10)
         return collectionView
     }()
     override func viewDidLoad() {
@@ -24,11 +32,17 @@ class FollowersListViewController: UIViewController {
         view.backgroundColor = .white
         setupFollowesListCollectionView()
         setupNavBar()
+        followersListViewModel = FollowersViewModel()
+        
+        bindData()
+      
+        self.url = "\(baseURl)\(followersListViewModel.page)"
+        self.followersListViewModel.getFollowersList(baseURL: url, endPoint: "", method: .get, param: ["":""])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       // setupNavBar()
+        setupNavBar()
     }
     
    
@@ -47,16 +61,35 @@ class FollowersListViewController: UIViewController {
         view.addSubview(followersCollectionView)
         followersCollectionView.register(UINib(nibName: "FollowersCell", bundle: nil), forCellWithReuseIdentifier: "FollowersCell")
     }
+    
+    private func bindData(){
+        self.followersListViewModel.followersDataSourceSubject.sink { followers in
+            
+            // append a new array after getting new 100 followers data
+            self.followersListViewModel.followersDataSource.append(contentsOf:  followers)
+            DispatchQueue.main.async {
+                self.followersCollectionView.reloadData()
+            }
+            
+        }.store(in: &subscription)
+    }
+
 }
 
 extension FollowersListViewController : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return self.followersListViewModel.followersDataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FollowersCell", for: indexPath) as? FollowersCell else { return UICollectionViewCell() }
-      //  cell.backgroundColor = .systemPink
+      
+         let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
+            cell.configure(item: item)
+        
+        
+       
+        
         return cell
     }
     
@@ -65,4 +98,31 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
         return CGSize(width: squareGrid, height: squareGrid*1.15)
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
+        
+        print(item.login)
+        print(item.avatar_url)
+    }
+}
+
+extension FollowersListViewController : UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard followersListViewModel.hasMoreFollowers else { return }
+            followersListViewModel.page += 1
+            
+            // new api call with new page
+            self.url = "\(baseURl)\(followersListViewModel.page)"
+            print("Next Page URl : ",self.url)
+            self.followersListViewModel.getFollowersList(baseURL: self.url, endPoint: "", method: .get, param: ["":""])
+        }
+        
+    }
 }

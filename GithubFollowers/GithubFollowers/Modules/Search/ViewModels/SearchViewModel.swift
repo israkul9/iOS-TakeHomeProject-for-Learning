@@ -7,9 +7,11 @@
 
 import Foundation
 import Combine
+import Alamofire
+
 class SearchViewModel {
     var searchedUserName  : String = ""
-
+    
     
     init(){
         

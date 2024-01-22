@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38824C132B5EAF18007D3F8F /* Followers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38824C122B5EAF18007D3F8F /* Followers.swift */; };
+		38824C152B5EB182007D3F8F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38824C142B5EB182007D3F8F /* NetworkManager.swift */; };
+		38BAA4982B5ED2E300E20F13 /* FollowersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BAA4972B5ED2E300E20F13 /* FollowersViewModel.swift */; };
 		510E52D52B5E5EA6007DBC06 /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */; };
 		510E52D62B5E5EA6007DBC06 /* FollowersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */; };
 		510E52D92B5E72BC007DBC06 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E52D82B5E72BC007DBC06 /* CustomAlertViewController.swift */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38824C122B5EAF18007D3F8F /* Followers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Followers.swift; sourceTree = "<group>"; };
+		38824C142B5EB182007D3F8F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		38BAA4972B5ED2E300E20F13 /* FollowersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewModel.swift; sourceTree = "<group>"; };
 		510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCell.swift; sourceTree = "<group>"; };
 		510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowersCell.xib; sourceTree = "<group>"; };
 		510E52D82B5E72BC007DBC06 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +57,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38824C102B5EACA6007D3F8F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				38824C122B5EAF18007D3F8F /* Followers.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		38824C112B5EACB2007D3F8F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				38824C142B5EB182007D3F8F /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		510E52D02B5E5E68007DBC06 /* FollowersCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,20 +140,13 @@
 		51EEA5242B5D45E300B7A731 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				51EEA5252B5D45FF00B7A731 /* Models */,
+				38824C102B5EACA6007D3F8F /* Models */,
 				51EEA5262B5D460700B7A731 /* Views */,
 				51EEA5272B5D460C00B7A731 /* ViewModels */,
 				514B4E932B592BC100156CCF /* SearchViewController.swift */,
 				51EEA5372B5D996500B7A731 /* FollowersListViewController.swift */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		51EEA5252B5D45FF00B7A731 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		51EEA5262B5D460700B7A731 /* Views */ = {
@@ -148,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				51EEA5352B5D934000B7A731 /* SearchViewModel.swift */,
+				38BAA4972B5ED2E300E20F13 /* FollowersViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -163,16 +179,9 @@
 		51EEA5292B5D47DB00B7A731 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				51EEA52A2B5D47F300B7A731 /* Network */,
+				38824C112B5EACB2007D3F8F /* Network */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		51EEA52A2B5D47F300B7A731 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
 			sourceTree = "<group>";
 		};
 		51EEA52B2B5D63BB00B7A731 /* Favourite */ = {
@@ -263,6 +272,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38824C152B5EB182007D3F8F /* NetworkManager.swift in Sources */,
+				38824C132B5EAF18007D3F8F /* Followers.swift in Sources */,
 				51EEA5342B5D893E00B7A731 /* AppConstant .swift in Sources */,
 				51EEA5362B5D934000B7A731 /* SearchViewModel.swift in Sources */,
 				514B4E942B592BC100156CCF /* SearchViewController.swift in Sources */,
@@ -273,6 +284,7 @@
 				51EEA52F2B5D716A00B7A731 /* GFButton.swift in Sources */,
 				510E52D92B5E72BC007DBC06 /* CustomAlertViewController.swift in Sources */,
 				514B4E902B592BC100156CCF /* AppDelegate.swift in Sources */,
+				38BAA4982B5ED2E300E20F13 /* FollowersViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +457,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WLDKHQVL9S;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GithubFollowers/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
