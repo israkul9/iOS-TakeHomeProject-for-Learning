@@ -14,7 +14,6 @@ class SearchViewController: UIViewController {
     var searchViewModel : SearchViewModel = SearchViewModel()
     
     
-    
     // MARK: - UI Components
     
     let logoImageView = UIImageView()
@@ -45,6 +44,8 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
       //  self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationItem.title = ""
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     // MARK: - UI setup
@@ -69,8 +70,8 @@ class SearchViewController: UIViewController {
         
         self.view.addSubview(self.userNameTextField)
         NSLayoutConstraint.activate([
+            userNameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor , constant: 20),
             userNameTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            userNameTextField.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             userNameTextField.heightAnchor.constraint(equalToConstant: 50.0),
             userNameTextField.widthAnchor.constraint(equalToConstant: view.frame.width - 50)
         ])
@@ -81,13 +82,10 @@ class SearchViewController: UIViewController {
         self.view.addSubview(getFollowersButton)
         
         NSLayoutConstraint.activate([
-        
             getFollowersButton.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor , constant: 25) ,
             getFollowersButton.leadingAnchor.constraint(equalTo: userNameTextField.leadingAnchor, constant: 50) ,
             getFollowersButton.trailingAnchor.constraint(equalTo: userNameTextField.trailingAnchor, constant: -50),
             getFollowersButton.heightAnchor.constraint(equalToConstant: 50.0)
-            
-            
         ])
         
         self.getFollowersButton.addTarget(self, action: #selector(didTappedOnGetFollowers), for: .touchUpInside)
@@ -101,7 +99,6 @@ class SearchViewController: UIViewController {
         NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object: self.userNameTextField)
             .compactMap({ ($0.object as? UITextField)?.text  })
-            .filter({$0.isEmpty == false })
             .sink(receiveValue: {[weak self] text in
                 guard let self = self else { return }
                 self.searchViewModel.searchedUserName = text
@@ -115,7 +112,7 @@ class SearchViewController: UIViewController {
     func createDismissKeyboardOnTabGesture(){
         // Set up a tap gesture recognizer to dismiss the keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        self.view.addGestureRecognizer(tapGesture)
     }
     
     @objc func dismissKeyboard() {
@@ -124,11 +121,20 @@ class SearchViewController: UIViewController {
     }
     
     @objc func didTappedOnGetFollowers() {
-        print("didTappedOnGetFollowers")
-        // Perform actions when the button is tapped
-        
         let vc = FollowersListViewController()
+        guard  searchViewModel.isUserNameValid else {
+            showAlertVC()
+            return
+        }
         navigationController?.pushViewController(vc, animated: true)
+    }
+    func showAlertVC(){
+        DispatchQueue.main.async {[self] in
+            let customAlert = CustomAlertViewController(message: "Please enter a valid username which is not empty.")
+            customAlert.modalPresentationStyle = .overFullScreen
+            customAlert.modalTransitionStyle = .crossDissolve
+            present(customAlert, animated: true, completion: nil)
+        }
     }
 }
 

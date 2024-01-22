@@ -8,11 +8,14 @@
 import Foundation
 import Combine
 class SearchViewModel {
-    
     var searchedUserName  : String = ""
 
     
     init(){
         
+    }
+    
+    var isUserNameValid : Bool {
+        return !searchedUserName.isEmpty
     }
 }

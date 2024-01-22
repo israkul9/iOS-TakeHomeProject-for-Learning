@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabbarController.tabBar.isTranslucent = false
         let searchVC = self.setupSearchViewController()
         let favVC = self.setupFavouriteViewController()
-        tabbarController.tabBar.backgroundColor = .yellow
+        tabbarController.tabBar.backgroundColor = .white
         tabbarController.viewControllers = [searchVC , favVC]
         return tabbarController
     }
