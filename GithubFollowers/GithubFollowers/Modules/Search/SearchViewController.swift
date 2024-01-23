@@ -85,7 +85,7 @@ class SearchViewController: UIViewController {
         self.view.addSubview(getFollowersButton)
         
         NSLayoutConstraint.activate([
-            getFollowersButton.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor , constant: 25) ,
+            getFollowersButton.bottomAnchor.constraint(equalTo: view.bottomAnchor , constant: -100) ,
             getFollowersButton.leadingAnchor.constraint(equalTo: userNameTextField.leadingAnchor, constant: 50) ,
             getFollowersButton.trailingAnchor.constraint(equalTo: userNameTextField.trailingAnchor, constant: -50),
             getFollowersButton.heightAnchor.constraint(equalToConstant: 50.0)
