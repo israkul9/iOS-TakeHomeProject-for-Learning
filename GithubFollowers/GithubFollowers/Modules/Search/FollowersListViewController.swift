@@ -79,9 +79,9 @@ class FollowersListViewController: UIViewController {
     }
     // MARK: Data binding
     private func bindData(){
-        self.followersListViewModel.followersDataSourceSubject.sink { followers in
+        self.followersListViewModel.followersDataSourceSubject.sink {[weak self] followers in
             // append a new array after getting new 100 followers data array
-            self.followersListViewModel.followersDataSource.append(contentsOf:  followers)
+            self?.followersListViewModel.followersDataSource.append(contentsOf:  followers)
             DispatchQueue.main.async {[weak self] in
                 self?.followersCollectionView.reloadData()
             }

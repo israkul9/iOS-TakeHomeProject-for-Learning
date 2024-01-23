@@ -120,6 +120,20 @@
 			path = GithubFollowers;
 			sourceTree = "<group>";
 		};
+		517EA42B2B5FD307009B39F9 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		517EA42C2B5FD31A009B39F9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		51EEA5212B5D45AA00B7A731 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +145,8 @@
 		51EEA5232B5D45D700B7A731 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				517EA42C2B5FD31A009B39F9 /* Onboarding */,
+				517EA42B2B5FD307009B39F9 /* Coordinator */,
 				51EEA52B2B5D63BB00B7A731 /* Favourite */,
 				51EEA5242B5D45E300B7A731 /* Search */,
 			);
