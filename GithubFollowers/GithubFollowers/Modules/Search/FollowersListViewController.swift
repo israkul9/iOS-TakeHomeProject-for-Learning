@@ -12,6 +12,7 @@ import SDWebImage
 
 class FollowersListViewController: UIViewController {
     
+    // MARK: Properties
     
     // SAllen0400
     var url = ""
@@ -19,12 +20,14 @@ class FollowersListViewController: UIViewController {
     var baseURl = "https://api.github.com/users/"
     //israkul9/followers?per_page=100&page="
   
+    
+    // MARK: ViewModel
     var followersListViewModel : FollowersViewModel = FollowersViewModel()
     
-    
+    // MARK: Subscription
     var subscription = Set<AnyCancellable>()
     
-    
+    // MARK: CollectionView
     private lazy var followersCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -36,6 +39,9 @@ class FollowersListViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 130, right: 10)
         return collectionView
     }()
+    
+    
+    // MARK: Life Cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +77,7 @@ class FollowersListViewController: UIViewController {
         view.addSubview(followersCollectionView)
         followersCollectionView.register(UINib(nibName: "FollowersCell", bundle: nil), forCellWithReuseIdentifier: "FollowersCell")
     }
-    
+    // MARK: Data binding
     private func bindData(){
         self.followersListViewModel.followersDataSourceSubject.sink { followers in
             // append a new array after getting new 100 followers data array
@@ -84,6 +90,8 @@ class FollowersListViewController: UIViewController {
 
 }
 
+
+// MARK: UICollectionViewDelegate , UICollectionViewDataSource
 extension FollowersListViewController : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.followersListViewModel.followersDataSource.count
@@ -111,7 +119,9 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
     }
 }
 
-// MARK:- Pagination logics and codes 
+
+// MARK: Pagination logics and codes
+
 extension FollowersListViewController : UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
