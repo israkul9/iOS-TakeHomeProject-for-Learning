@@ -1,5 +1,6 @@
 
-# iOS-TakeHomeProject-By-Sean-Allen
+# iOS-TakeHomeProject
+Inspired By-Sean-Allen
 
 Project Name : Github Followers
 
