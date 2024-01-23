@@ -3,7 +3,7 @@
 
 Project Name : Github Followers
 
-<img width="364" alt="Github followers" src="https://github.com/israkul9/iOS-TakeHomeProject-By-Sean-Allen/assets/42734456/84fb6dda-2437-44f5-96d4-fa9f7c0ec7d7">
+<img width="612" alt="github followers" src="https://github.com/israkul9/iOS-TakeHomeProject-By-Sean-Allen/assets/42734456/7c8c1684-8664-4dc2-993d-1cf3550d09b6">
 
 Description : A native iOS app for learning purpose . 
 
