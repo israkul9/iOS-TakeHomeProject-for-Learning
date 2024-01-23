@@ -11,11 +11,20 @@ import Alamofire
 import SDWebImage
 
 class FollowersListViewController: UIViewController {
+    
+    
+    // SAllen0400
     var url = ""
-    var baseURl = "https://api.github.com/users/SAllen0400/followers?per_page=100&page="
+    var userName = ""
+    var baseURl = "https://api.github.com/users/"
+    //israkul9/followers?per_page=100&page="
+  
     var followersListViewModel : FollowersViewModel = FollowersViewModel()
     
+    
     var subscription = Set<AnyCancellable>()
+    
+    
     private lazy var followersCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -27,27 +36,28 @@ class FollowersListViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 130, right: 10)
         return collectionView
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupFollowesListCollectionView()
         setupNavBar()
         followersListViewModel = FollowersViewModel()
-        
         bindData()
-      
-        self.url = "\(baseURl)\(followersListViewModel.page)"
-        self.followersListViewModel.getFollowersList(baseURL: url, endPoint: "", method: .get, param: ["":""])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        followersListViewModel.gitHubUserName = self.userName
         setupNavBar()
+        self.url = "\(baseURl)\(followersListViewModel.gitHubUserName)\(followersListViewModel.followersEndPoint)\(followersListViewModel.page)"
+        //"\(baseURl)\(followersListViewModel.page)"
+        self.followersListViewModel.getFollowersList(baseURL: url, endPoint: "", method: .get, param: ["":""])
     }
     
    
     private func setupNavBar() {
-        navigationItem.title = "israkul9"
+        navigationItem.title = self.userName
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
@@ -64,13 +74,11 @@ class FollowersListViewController: UIViewController {
     
     private func bindData(){
         self.followersListViewModel.followersDataSourceSubject.sink { followers in
-            
-            // append a new array after getting new 100 followers data
+            // append a new array after getting new 100 followers data array
             self.followersListViewModel.followersDataSource.append(contentsOf:  followers)
-            DispatchQueue.main.async {
-                self.followersCollectionView.reloadData()
+            DispatchQueue.main.async {[weak self] in
+                self?.followersCollectionView.reloadData()
             }
-            
         }.store(in: &subscription)
     }
 
@@ -86,10 +94,6 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
       
          let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
             cell.configure(item: item)
-        
-        
-       
-        
         return cell
     }
     
@@ -102,11 +106,12 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
         
-        print(item.login)
-        print(item.avatar_url)
+      //  print(item.login)
+      //  print(item.avatar_url)
     }
 }
 
+// MARK:- Pagination logics and codes 
 extension FollowersListViewController : UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -119,7 +124,7 @@ extension FollowersListViewController : UIScrollViewDelegate {
             followersListViewModel.page += 1
             
             // new api call with new page
-            self.url = "\(baseURl)\(followersListViewModel.page)"
+            self.url = "\(baseURl)\(followersListViewModel.gitHubUserName)\(followersListViewModel.followersEndPoint)\(followersListViewModel.page)"
             print("Next Page URl : ",self.url)
             self.followersListViewModel.getFollowersList(baseURL: self.url, endPoint: "", method: .get, param: ["":""])
         }

@@ -10,20 +10,19 @@ import Combine
 import Alamofire
 
 class FollowersViewModel {
-    
-    var hasMoreFollowers = true
-    var page = 1
+   
+    var followersCountEachTime:Int = 100
+    var followersEndPoint = "/followers?per_page=100&page="
+    // here per page = 100 means , we are getting 100 followers per request
+    var gitHubUserName = ""
+    var hasMoreFollowers : Bool = true
+    var page : Int = 1
     var subscription = Set<AnyCancellable>()
-    
-    var followersDataSource : [Followers] = []
-    
+    var followersDataSource : [Followers] = [] // data source for followers list 
     var followersDataSourceSubject = PassthroughSubject<[Followers] ,Never>()
-    
     init(){
         
     }
-    
-    
     func getFollowersList(baseURL : String , endPoint : String , method : HTTPMethod , param : [String:String]){
         NetworkManager.shared.requestArray(baseUrl: baseURL,
                                            path: endPoint,
@@ -38,18 +37,11 @@ class FollowersViewModel {
                 print("Network request failed with error: \(error)")
             }
         }, receiveValue: {[weak self] models in
-            
-            if models.count < 100 {
-                self?.hasMoreFollowers = false
+            guard let self = self else { return }
+            if models.count < self.followersCountEachTime {
+                self.hasMoreFollowers = false
             }
-            
-            self?.followersDataSourceSubject.send(models)
-            
-            // Handle the success case here with the array of decoded models
-//            self.followersDataSource = models
-//            for itemS in models {
-//                print(itemS.login!)
-//            }
+            self.followersDataSourceSubject.send(models)
         })
         .store(in: &subscription)
     }

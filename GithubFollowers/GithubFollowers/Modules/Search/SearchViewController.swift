@@ -129,6 +129,7 @@ class SearchViewController: UIViewController {
             showAlertVC()
             return
         }
+        vc.userName = searchViewModel.searchedUserName
         navigationController?.pushViewController(vc, animated: true)
     }
     func showAlertVC(){
