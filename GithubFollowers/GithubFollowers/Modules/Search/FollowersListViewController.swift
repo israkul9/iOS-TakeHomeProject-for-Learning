@@ -11,8 +11,10 @@ import Alamofire
 import SDWebImage
 
 class FollowersListViewController: UIViewController {
+     
+    // MARK: Searchbar Properties
+    var searchBar: UISearchBar!
     
-    // MARK: Properties
     
     // SAllen0400
     var url = ""
@@ -36,7 +38,7 @@ class FollowersListViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 130, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 100, right: 10)
         return collectionView
     }()
     
@@ -46,10 +48,13 @@ class FollowersListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        self.searchBar = UISearchBar()
+        followersListViewModel = FollowersViewModel()
+        setupSearchBar()
         setupFollowesListCollectionView()
         setupNavBar()
-        followersListViewModel = FollowersViewModel()
         bindData()
+        setupSearchBarBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +66,10 @@ class FollowersListViewController: UIViewController {
         self.followersListViewModel.getFollowersList(baseURL: url, endPoint: "", method: .get, param: ["":""])
     }
     
+    deinit {
+        // Cancel Combine subscriptions when the view controller is deallocated
+        subscription.forEach { $0.cancel() }
+    }
    
     private func setupNavBar() {
         navigationItem.title = self.userName
@@ -70,6 +79,7 @@ class FollowersListViewController: UIViewController {
         navBarAppearance.backgroundColor = UIColor.white
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.hidesBackButton = true
     }
     
     private func setupFollowesListCollectionView(){
@@ -77,8 +87,11 @@ class FollowersListViewController: UIViewController {
         view.addSubview(followersCollectionView)
         followersCollectionView.register(UINib(nibName: "FollowersCell", bundle: nil), forCellWithReuseIdentifier: "FollowersCell")
     }
+    
+    
     // MARK: Data binding
     private func bindData(){
+        // Followers list data binding
         self.followersListViewModel.followersDataSourceSubject.sink {[weak self] followers in
             // append a new array after getting new 100 followers data array
             self?.followersListViewModel.followersDataSource.append(contentsOf:  followers)
@@ -86,22 +99,90 @@ class FollowersListViewController: UIViewController {
                 self?.followersCollectionView.reloadData()
             }
         }.store(in: &subscription)
+        
+
+        // searched data  binding
+        self.followersListViewModel.searchedtext.sink { completion in
+            switch completion {
+            case .finished :
+                print("finished \(completion)")
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        } receiveValue: {[weak self]  searchedText in
+            self?.handleSearch(text: searchedText)
+        }
+        .store(in: &subscription)
     }
 
+}
+
+extension FollowersListViewController : UISearchBarDelegate {
+    func setupSearchBar(){
+        // Customize the search bar if needed
+        self.searchBar.placeholder = "Search followers"
+        navigationItem.titleView = searchBar
+    }
+    
+    private func setupSearchBarBinding() {
+        // Set up Combine publisher to observe text changes
+        NotificationCenter.default.publisher(for: UISearchTextField.textDidChangeNotification, object: self.searchBar.searchTextField)
+            .map { _ in self.searchBar.text ?? "" }
+            .debounce(for: .seconds(0.2), scheduler: RunLoop.main) // Optional debounce for less frequent updates
+            .sink { [weak self] searchText in
+                self?.followersListViewModel.isSearching = true
+                self?.followersListViewModel.searchedtext.send(searchText)
+            }
+            .store(in: &subscription)
+    }
+    
+    private func handleSearch(text: String) {
+        if text.isEmpty {
+            self.followersListViewModel.filteredFollowersList =  self.followersListViewModel.followersDataSource
+            self.followersListViewModel.isSearching = false
+            searchBar.resignFirstResponder() // Hide the keyboard
+        }
+        else {
+            self.followersListViewModel.isSearching = true
+            var totalFollowersList : [Followers] = []
+            totalFollowersList = followersListViewModel.followersDataSource
+            self.followersListViewModel.filteredFollowersList = totalFollowersList.filter { (followers : Followers) -> Bool in
+                let loginText = followers.login?.lowercased().contains(text.lowercased()) ?? false
+                return loginText
+            }
+        }
+        DispatchQueue.main.async {[weak self] in
+            self?.followersCollectionView.reloadData()
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // Handle search button click if needed
+        self.followersListViewModel.isSearching = true
+        searchBar.resignFirstResponder()
+    }
 }
 
 
 // MARK: UICollectionViewDelegate , UICollectionViewDataSource
 extension FollowersListViewController : UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.followersListViewModel.followersDataSource.count
+        
+        return followersListViewModel.isSearching ? followersListViewModel.filteredFollowersList.count : followersListViewModel.followersDataSource.count
+        //  return self.followersListViewModel.followersDataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FollowersCell", for: indexPath) as? FollowersCell else { return UICollectionViewCell() }
-      
-         let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
+        
+        if followersListViewModel.isSearching {
+            let item :  Followers = self.followersListViewModel.filteredFollowersList[indexPath.item]
             cell.configure(item: item)
+            return cell
+        }
+        
+        let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
+        cell.configure(item: item)
         return cell
     }
     
@@ -112,10 +193,7 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
-        
-      //  print(item.login)
-      //  print(item.avatar_url)
+        //let item :  Followers = self.followersListViewModel.followersDataSource[indexPath.item]
     }
 }
 
@@ -123,12 +201,10 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
 // MARK: Pagination logics and codes
 
 extension FollowersListViewController : UIScrollViewDelegate {
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-        
         if offsetY > contentHeight - height {
             guard followersListViewModel.hasMoreFollowers else { return }
             followersListViewModel.page += 1
@@ -141,3 +217,14 @@ extension FollowersListViewController : UIScrollViewDelegate {
         
     }
 }
+
+
+//
+//extension UITextField {
+//    var textPublisher: AnyPublisher<String, Never> {
+//        NotificationCenter.default
+//            .publisher(for: UITextField.textDidChangeNotification, object: self)
+//            .map { ($0.object as? UITextField)?.text  ?? "" }
+//            .eraseToAnyPublisher()
+//    }
+//}

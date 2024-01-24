@@ -18,8 +18,14 @@ class FollowersViewModel {
     var hasMoreFollowers : Bool = true
     var page : Int = 1
     var subscription = Set<AnyCancellable>()
-    var followersDataSource : [Followers] = [] // data source for followers list 
+    var followersDataSource = [Followers]() // data source for followers list 
     var followersDataSourceSubject = PassthroughSubject<[Followers] ,Never>()
+    
+    var isSearching = false
+    var searchedtext = PassthroughSubject<String ,Never>()
+    
+    var filteredFollowersList : [Followers] = []
+    
     init(){
         
     }
