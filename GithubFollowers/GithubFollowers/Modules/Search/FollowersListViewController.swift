@@ -118,8 +118,17 @@ class FollowersListViewController: UIViewController {
 }
 
 extension FollowersListViewController : UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // Implement the action when the cancel button is clicked
+        searchBar.text = "" // Clear the search text
+        searchBar.resignFirstResponder() // Dismiss the keyboard
+        self.followersListViewModel.isSearching = false
+        self.followersListViewModel.searchedtext.send("")
+    }
     func setupSearchBar(){
         // Customize the search bar if needed
+        searchBar.showsCancelButton = true
+        searchBar.delegate = self
         self.searchBar.placeholder = "Search followers"
         navigationItem.titleView = searchBar
     }
@@ -140,7 +149,7 @@ extension FollowersListViewController : UISearchBarDelegate {
         if text.isEmpty {
             self.followersListViewModel.filteredFollowersList =  self.followersListViewModel.followersDataSource
             self.followersListViewModel.isSearching = false
-            searchBar.resignFirstResponder() // Hide the keyboard
+            //searchBar.resignFirstResponder() // Hide the keyboard
         }
         else {
             self.followersListViewModel.isSearching = true
@@ -169,7 +178,6 @@ extension FollowersListViewController : UICollectionViewDelegate , UICollectionV
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return followersListViewModel.isSearching ? followersListViewModel.filteredFollowersList.count : followersListViewModel.followersDataSource.count
-        //  return self.followersListViewModel.followersDataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
