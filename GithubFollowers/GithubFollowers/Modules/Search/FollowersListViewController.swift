@@ -92,15 +92,26 @@ class FollowersListViewController: UIViewController {
     // MARK: Data binding
     private func bindData(){
         // Followers list data binding
-        self.followersListViewModel.followersDataSourceSubject.sink {[weak self] followers in
+        self.followersListViewModel.followersDataSourceSubject.filter({
+            if $0.isEmpty {
+                print("NO FOLLOWERS DATA FOUND")
+                return false
+            }
+            else {
+                print("FOLLOWERS DATA FOUND")
+                return true
+            }
+        })
+        .sink {[weak self] followers in
             // append a new array after getting new 100 followers data array
             self?.followersListViewModel.followersDataSource.append(contentsOf:  followers)
+            
             DispatchQueue.main.async {[weak self] in
                 self?.followersCollectionView.reloadData()
             }
         }.store(in: &subscription)
         
-
+        
         // searched data  binding
         self.followersListViewModel.searchedtext.sink { completion in
             switch completion {
@@ -161,7 +172,13 @@ extension FollowersListViewController : UISearchBarDelegate {
             }
         }
         DispatchQueue.main.async {[weak self] in
-            self?.followersCollectionView.reloadData()
+            self?.followersCollectionView.performBatchUpdates({
+                // Reload sections or items to animate changes smoothly
+                let indexSet = IndexSet(integer: 0) // Assuming there's only one section
+                UIView.animate(withDuration: 0.1) {
+                    self?.followersCollectionView.reloadSections(indexSet)
+                }
+            }, completion: nil)
         }
     }
     

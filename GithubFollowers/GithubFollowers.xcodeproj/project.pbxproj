@@ -13,6 +13,8 @@
 		510E52D52B5E5EA6007DBC06 /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */; };
 		510E52D62B5E5EA6007DBC06 /* FollowersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */; };
 		510E52D92B5E72BC007DBC06 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E52D82B5E72BC007DBC06 /* CustomAlertViewController.swift */; };
+		514641292B6276AF00B08991 /* FavCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514641272B6276AF00B08991 /* FavCell.swift */; };
+		5146412A2B6276AF00B08991 /* FavCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 514641282B6276AF00B08991 /* FavCell.xib */; };
 		514B4E902B592BC100156CCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514B4E8F2B592BC100156CCF /* AppDelegate.swift */; };
 		514B4E942B592BC100156CCF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514B4E932B592BC100156CCF /* SearchViewController.swift */; };
 		514B4E9C2B592BC300156CCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 514B4E9B2B592BC300156CCF /* Assets.xcassets */; };
@@ -32,6 +34,8 @@
 		510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCell.swift; sourceTree = "<group>"; };
 		510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowersCell.xib; sourceTree = "<group>"; };
 		510E52D82B5E72BC007DBC06 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
+		514641272B6276AF00B08991 /* FavCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavCell.swift; sourceTree = "<group>"; };
+		514641282B6276AF00B08991 /* FavCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavCell.xib; sourceTree = "<group>"; };
 		514B4E8C2B592BC100156CCF /* GithubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		514B4E8F2B592BC100156CCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		514B4E932B592BC100156CCF /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,23 @@
 				510E52D82B5E72BC007DBC06 /* CustomAlertViewController.swift */,
 			);
 			path = Alerts;
+			sourceTree = "<group>";
+		};
+		514641252B62768100B08991 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				514641262B62768E00B08991 /* FavCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		514641262B62768E00B08991 /* FavCell */ = {
+			isa = PBXGroup;
+			children = (
+				514641272B6276AF00B08991 /* FavCell.swift */,
+				514641282B6276AF00B08991 /* FavCell.xib */,
+			);
+			path = FavCell;
 			sourceTree = "<group>";
 		};
 		514B4E832B592BC100156CCF = {
@@ -187,6 +208,7 @@
 		51EEA52B2B5D63BB00B7A731 /* Favourite */ = {
 			isa = PBXGroup;
 			children = (
+				514641252B62768100B08991 /* Views */,
 				51EEA52C2B5D63DE00B7A731 /* FavouriteViewController.swift */,
 			);
 			path = Favourite;
@@ -260,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				510E52D62B5E5EA6007DBC06 /* FollowersCell.xib in Resources */,
+				5146412A2B6276AF00B08991 /* FavCell.xib in Resources */,
 				514B4E9F2B592BC300156CCF /* LaunchScreen.storyboard in Resources */,
 				514B4E9C2B592BC300156CCF /* Assets.xcassets in Resources */,
 			);
@@ -277,6 +300,7 @@
 				51EEA5342B5D893E00B7A731 /* AppConstant .swift in Sources */,
 				51EEA5362B5D934000B7A731 /* SearchViewModel.swift in Sources */,
 				514B4E942B592BC100156CCF /* SearchViewController.swift in Sources */,
+				514641292B6276AF00B08991 /* FavCell.swift in Sources */,
 				51EEA52D2B5D63DE00B7A731 /* FavouriteViewController.swift in Sources */,
 				51EEA5382B5D996500B7A731 /* FollowersListViewController.swift in Sources */,
 				51EEA5312B5D737400B7A731 /* GFTextField.swift in Sources */,
