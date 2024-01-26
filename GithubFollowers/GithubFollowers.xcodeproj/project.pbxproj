@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		38824C132B5EAF18007D3F8F /* Followers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38824C122B5EAF18007D3F8F /* Followers.swift */; };
 		38824C152B5EB182007D3F8F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38824C142B5EB182007D3F8F /* NetworkManager.swift */; };
+		389135C42B63FC8A00BC20E5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135C32B63FC8A00BC20E5 /* Coordinator.swift */; };
+		389135C62B63FF0B00BC20E5 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135C52B63FF0B00BC20E5 /* ApplicationCoordinator.swift */; };
+		389135C92B63FF4900BC20E5 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135C82B63FF4900BC20E5 /* OnboardingView.swift */; };
+		389135CB2B64012600BC20E5 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135CA2B64012600BC20E5 /* OnboardingViewModel.swift */; };
+		389135CD2B641FC000BC20E5 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135CC2B641FC000BC20E5 /* OnboardingCoordinator.swift */; };
+		389135CF2B64253700BC20E5 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135CE2B64253700BC20E5 /* MainCoordinator.swift */; };
+		389135D12B64289E00BC20E5 /* FavouriteTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135D02B64289E00BC20E5 /* FavouriteTabCoordinator.swift */; };
+		389135D42B642FF300BC20E5 /* SearchTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389135D32B642FF300BC20E5 /* SearchTabCoordinator.swift */; };
 		38BAA4982B5ED2E300E20F13 /* FollowersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BAA4972B5ED2E300E20F13 /* FollowersViewModel.swift */; };
 		510E52D52B5E5EA6007DBC06 /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */; };
 		510E52D62B5E5EA6007DBC06 /* FollowersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */; };
@@ -30,6 +38,14 @@
 /* Begin PBXFileReference section */
 		38824C122B5EAF18007D3F8F /* Followers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Followers.swift; sourceTree = "<group>"; };
 		38824C142B5EB182007D3F8F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		389135C32B63FC8A00BC20E5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		389135C52B63FF0B00BC20E5 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		389135C82B63FF4900BC20E5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		389135CA2B64012600BC20E5 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		389135CC2B641FC000BC20E5 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		389135CE2B64253700BC20E5 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		389135D02B64289E00BC20E5 /* FavouriteTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteTabCoordinator.swift; sourceTree = "<group>"; };
+		389135D32B642FF300BC20E5 /* SearchTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabCoordinator.swift; sourceTree = "<group>"; };
 		38BAA4972B5ED2E300E20F13 /* FollowersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersViewModel.swift; sourceTree = "<group>"; };
 		510E52D32B5E5EA6007DBC06 /* FollowersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCell.swift; sourceTree = "<group>"; };
 		510E52D42B5E5EA6007DBC06 /* FollowersCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowersCell.xib; sourceTree = "<group>"; };
@@ -75,6 +91,33 @@
 				38824C142B5EB182007D3F8F /* NetworkManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		389135C22B63FC7300BC20E5 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				389135D22B642FCE00BC20E5 /* MainCoordinator */,
+				389135C32B63FC8A00BC20E5 /* Coordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		389135C72B63FF2700BC20E5 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				389135C82B63FF4900BC20E5 /* OnboardingView.swift */,
+				389135CA2B64012600BC20E5 /* OnboardingViewModel.swift */,
+				389135CC2B641FC000BC20E5 /* OnboardingCoordinator.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		389135D22B642FCE00BC20E5 /* MainCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				389135CE2B64253700BC20E5 /* MainCoordinator.swift */,
+			);
+			path = MainCoordinator;
 			sourceTree = "<group>";
 		};
 		510E52D02B5E5E68007DBC06 /* FollowersCell */ = {
@@ -130,6 +173,7 @@
 		514B4E8E2B592BC100156CCF /* GithubFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				389135C22B63FC7300BC20E5 /* Coordinator */,
 				51EEA5322B5D891A00B7A731 /* Common */,
 				51EEA5292B5D47DB00B7A731 /* Service */,
 				51EEA5232B5D45D700B7A731 /* Modules */,
@@ -144,6 +188,7 @@
 		51EEA5212B5D45AA00B7A731 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				389135C52B63FF0B00BC20E5 /* ApplicationCoordinator.swift */,
 				514B4E8F2B592BC100156CCF /* AppDelegate.swift */,
 			);
 			path = App;
@@ -152,6 +197,7 @@
 		51EEA5232B5D45D700B7A731 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				389135C72B63FF2700BC20E5 /* Onboarding */,
 				51EEA52B2B5D63BB00B7A731 /* Favourite */,
 				51EEA5242B5D45E300B7A731 /* Search */,
 			);
@@ -166,6 +212,7 @@
 				51EEA5272B5D460C00B7A731 /* ViewModels */,
 				514B4E932B592BC100156CCF /* SearchViewController.swift */,
 				51EEA5372B5D996500B7A731 /* FollowersListViewController.swift */,
+				389135D32B642FF300BC20E5 /* SearchTabCoordinator.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -210,6 +257,7 @@
 			children = (
 				514641252B62768100B08991 /* Views */,
 				51EEA52C2B5D63DE00B7A731 /* FavouriteViewController.swift */,
+				389135D02B64289E00BC20E5 /* FavouriteTabCoordinator.swift */,
 			);
 			path = Favourite;
 			sourceTree = "<group>";
@@ -295,20 +343,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				389135D12B64289E00BC20E5 /* FavouriteTabCoordinator.swift in Sources */,
 				38824C152B5EB182007D3F8F /* NetworkManager.swift in Sources */,
 				38824C132B5EAF18007D3F8F /* Followers.swift in Sources */,
+				389135C42B63FC8A00BC20E5 /* Coordinator.swift in Sources */,
 				51EEA5342B5D893E00B7A731 /* AppConstant .swift in Sources */,
 				51EEA5362B5D934000B7A731 /* SearchViewModel.swift in Sources */,
 				514B4E942B592BC100156CCF /* SearchViewController.swift in Sources */,
 				514641292B6276AF00B08991 /* FavCell.swift in Sources */,
+				389135D42B642FF300BC20E5 /* SearchTabCoordinator.swift in Sources */,
 				51EEA52D2B5D63DE00B7A731 /* FavouriteViewController.swift in Sources */,
 				51EEA5382B5D996500B7A731 /* FollowersListViewController.swift in Sources */,
 				51EEA5312B5D737400B7A731 /* GFTextField.swift in Sources */,
 				510E52D52B5E5EA6007DBC06 /* FollowersCell.swift in Sources */,
 				51EEA52F2B5D716A00B7A731 /* GFButton.swift in Sources */,
+				389135CD2B641FC000BC20E5 /* OnboardingCoordinator.swift in Sources */,
+				389135CF2B64253700BC20E5 /* MainCoordinator.swift in Sources */,
 				510E52D92B5E72BC007DBC06 /* CustomAlertViewController.swift in Sources */,
+				389135CB2B64012600BC20E5 /* OnboardingViewModel.swift in Sources */,
 				514B4E902B592BC100156CCF /* AppDelegate.swift in Sources */,
 				38BAA4982B5ED2E300E20F13 /* FollowersViewModel.swift in Sources */,
+				389135C92B63FF4900BC20E5 /* OnboardingView.swift in Sources */,
+				389135C62B63FF0B00BC20E5 /* ApplicationCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

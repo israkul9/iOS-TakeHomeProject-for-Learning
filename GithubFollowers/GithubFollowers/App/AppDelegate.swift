@@ -11,42 +11,29 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+ var appCoordinator : ApplicationCoordinator?
  var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
         let window = UIWindow(frame: UIScreen.main.bounds)
-        self.window = window
-        window.rootViewController = self.setupTabbar()
-        window.makeKeyAndVisible()
+        
+        let appCoordinator = ApplicationCoordinator(window: window)
+        
+        self.appCoordinator = appCoordinator
+        
+        appCoordinator.start()
+        
+//
+//        self.window = window
+//        window.rootViewController = self.setupTabbar()
+//        window.makeKeyAndVisible()
         return true
     }
     
     
-    func setupTabbar() -> UITabBarController{
-        let tabbarController = UITabBarController()
-        tabbarController.tabBar.isTranslucent = false
-        let searchVC = self.setupSearchViewController()
-        let favVC = self.setupFavouriteViewController()
-        tabbarController.tabBar.backgroundColor = .white
-        tabbarController.viewControllers = [searchVC , favVC]
-        return tabbarController
-    }
-    
-    func setupSearchViewController() -> UINavigationController {
-        let searchVC =  SearchViewController()
-        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        searchVC.title = "Search"
-        return UINavigationController(rootViewController: searchVC)
-    }
-    
-    func setupFavouriteViewController() -> UINavigationController {
-        let favVC =  FavouriteViewController()
-        favVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        favVC.title = "Favourites"
-        return  UINavigationController(rootViewController: favVC)
-    }
+ 
     
     
     // MARK: - Core Data stack
